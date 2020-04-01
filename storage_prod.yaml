@@ -115,3 +115,33 @@ spec:
   hostPath:
     path: /mnt/data/mf/prod_dumps/
     type: DirectoryOrCreate     
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mffeconfigpvc
+spec:
+  storageClassName: mffeconfigstorage
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Mi
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfsmffeconfigstorage
+spec:
+  storageClassName: nfsmffeconfigstorage
+  accessModes:
+    - ReadOnlyMany
+  capacity:
+    storage: 1Mi
+  hostPath:
+    path: /mnt/data/mf/prod_mff_econfig/
+    type: DirectoryOrCreate  
