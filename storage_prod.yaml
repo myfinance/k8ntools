@@ -143,5 +143,5 @@ spec:
   capacity:
     storage: 1Mi
   hostPath:
-    path: /mnt/data/mf/prod_mff_econfig/
+    path: /mnt/data/mf/prod_mffe_config/
     type: DirectoryOrCreate  
