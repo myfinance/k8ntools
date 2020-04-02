@@ -14,6 +14,10 @@ spec:
         backend:
           serviceName: myfinance
           servicePort: 8181
+      - path: /mff
+        backend:
+          serviceName: mffrontend
+          servicePort: 80         
   - host: admin.myfinance.mylocaldomain #for local use add these domain to your dns server for example sophos-network-dns-DNS Host Entry. 
     http:
       paths:
