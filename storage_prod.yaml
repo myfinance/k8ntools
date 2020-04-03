@@ -145,3 +145,33 @@ spec:
   hostPath:
     path: /mnt/data/mf/prod_mffe_config/
     type: DirectoryOrCreate  
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nexuspvc
+spec:
+  storageClassName: nexusstorage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nexusstorage
+spec:
+  storageClassName: nexusstorage
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /mnt/data/nexus/
+    type: DirectoryOrCreate      
