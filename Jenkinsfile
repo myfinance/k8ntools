@@ -23,7 +23,7 @@ pipeline {
         docker {
             image 'lachlanevenson/k8s-helm:latest' 
         }
-  /  }
+     }
      steps {
        sh 'helm dependency update ./helm/myk8ntools'
        sh 'envsubst < ./helm/myk8ntools/Chart.yaml | helm upgrade -i --cleanup-on-fail myk8ntools -'
