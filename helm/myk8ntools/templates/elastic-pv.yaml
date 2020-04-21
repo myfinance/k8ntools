@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.elastic.storage_pvc }} 
+  #namespace: kube-system
+spec:
+  storageClassName: elasticstorage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.elastic.storage_size }} 
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: localselasticstorage
+  #namespace: kube-system
+spec:
+  storageClassName: elasticstorage
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: {{ .Values.elastic.storage_size }} 
+  hostPath:
+    path:  {{ .Values.elastic.storage_path }}   
+    type: DirectoryOrCreate   

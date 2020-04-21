@@ -1,0 +1,41 @@
+replicaCount: 1
+
+adminer:
+  image: adminer
+  port: 8080
+  port_ext: 30010
+  name: adminer
+
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  elastic_sa:  elasticsearch-logging
+  fluentd_sa: fluentd-es
+
+stable/prometheus-operator:
+  grafana.adminPassword: vulkan
+
+elastic:
+  # elasticSearch is not working on a nfs-share, due to permissions
+  storage_path: /opt/elastic/
+  storage_size: 10Gi
+  storage_pvc: elasticpvc
+  port: 9200
+  transport_port: 9300
+  image: quay.io/fluentd_elasticsearch/elasticsearch:v7.4.2
+  name: elasticsearch-logging
+
+kibana:
+  port: 5601
+  port_ext: 30011
+  image: docker.elastic.co/kibana/kibana-oss:7.4.2
+  name: kibana-logging
+
+ingress:
+  enabled: true
+  name: myk8ntools
+  admin_host: admin.myfinance.mylocaldomain
+  elastic_host: elastic.myfinance.mylocaldomain
+  kibana_host: kibana.myfinance.mylocaldomain  
+  grafana_host: grafana.myfinance.mylocaldomain  

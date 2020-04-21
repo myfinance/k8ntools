@@ -1,0 +1,53 @@
+
+#
+# Finally, Kibana - for visualising the results
+#
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.kibana.name }}
+  #namespace: kube-system
+  labels:
+    k8s-app: {{ .Values.kibana.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      k8s-app: {{ .Values.kibana.name }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ .Values.kibana.name }}
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: 'docker/default'
+    spec:
+      containers:
+      - name: {{ .Values.kibana.name }}
+        image: {{ .Values.kibana.image }}
+        env:
+          - name: ELASTICSEARCH_HOSTS
+            value: http://{{ .Values.elastic.name }}:{{ .Values.elastic.port }}
+        ports:
+        - containerPort: 5601
+          name: ui
+          protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.kibana.name }}
+  #namespace: kube-system
+  labels:
+    k8s-app: {{ .Values.kibana.name }}
+    kubernetes.io/name: "Kibana"
+spec:
+  ports:
+  - port:  {{ .Values.kibana.port }}
+    nodePort: {{ .Values.kibana.port_ext }}
+  selector:
+    k8s-app: {{ .Values.kibana.name }}
+  type: NodePort 

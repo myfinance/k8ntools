@@ -1,0 +1,43 @@
+{{- if .Values.serviceAccount.create -}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.serviceAccount.fluentd_sa }}
+  #namespace: kube-system
+  labels:
+    k8s-app: fluentd-es
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ .Values.serviceAccount.fluentd_sa }}
+  labels:
+    k8s-app: {{ .Values.serviceAccount.fluentd_sa }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - "namespaces"
+  - "pods"
+  verbs:
+  - "get"
+  - "watch"
+  - "list"
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ .Values.serviceAccount.fluentd_sa }}
+  labels:
+    k8s-app: {{ .Values.serviceAccount.fluentd_sa }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Values.serviceAccount.fluentd_sa }}
+  #namespace: kube-system
+  namespace: default
+  apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: {{ .Values.serviceAccount.fluentd_sa }}
+  apiGroup: ""
+{{- end -}}  

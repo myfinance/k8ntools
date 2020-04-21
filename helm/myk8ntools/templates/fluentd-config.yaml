@@ -1,0 +1,17 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: fluentd-es-config-v0.2.0
+data:
+  system.conf: |-
+{{ (.Files.Get "system.conf") . | indent 4}}
+  containers.input.conf:  |-
+{{ (.Files.Get "containers.input.conf") . | indent 4 }}  
+  forward.input.conf:  |-
+{{ (.Files.Get "forward.input.conf") . | indent 4 }}  
+  monitoring.conf:  |-
+{{ (.Files.Get "monitoring.conf") . | indent 4 }} 
+  output.conf:  |-
+{{ (.Files.Get "output.conf") . | indent 4 }}   
+  system.input.conf:  |-
+{{ (.Files.Get "system.input.conf") . | indent 4 }} 

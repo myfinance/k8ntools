@@ -1,0 +1,38 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.adminer.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.adminer.name }}  
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.adminer.name }}
+    spec:
+      containers:
+        - name: {{ .Values.adminer.name }}
+          image: {{ .Values.adminer.image }}   
+          
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+ name: {{ .Values.adminer.name }}
+spec:
+ #this defines which pod is going to be presented by this service
+ selector:
+  app: {{ .Values.adminer.name }}
+ ports:
+  - name: {{ .Values.adminer.name }}
+    port: {{ .Values.adminer.port }}
+    nodePort: {{ .Values.adminer.port_ext }}
+ type: NodePort                 
+            
+            
+   
+          

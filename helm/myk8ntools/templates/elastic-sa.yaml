@@ -1,0 +1,49 @@
+{{- if .Values.serviceAccount.create -}}
+#
+# Elastic Search configuration
+#
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.serviceAccount.elastic_sa }}
+  #namespace: kube-system
+  labels:
+    k8s-app: {{ .Values.serviceAccount.elastic_sa }}
+---
+
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ .Values.serviceAccount.elastic_sa }}
+  labels:
+    k8s-app: {{ .Values.serviceAccount.elastic_sa }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - "services"
+  - "namespaces"
+  - "endpoints"
+  verbs:
+  - "get"
+---
+
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  #namespace: kube-system
+  name: {{ .Values.serviceAccount.elastic_sa }}
+  labels:
+    k8s-app: {{ .Values.serviceAccount.elastic_sa }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Values.serviceAccount.elastic_sa }}
+  #namespace: kube-system
+  namespace: default
+  apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: {{ .Values.serviceAccount.elastic_sa }}
+  apiGroup: ""
+
+{{- end -}}  
