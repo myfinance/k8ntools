@@ -1,5 +1,12 @@
 pipeline {
-    agent any
+  agent any
+
+ environment{
+   //Snapshot Version
+   VERSION = "0.13.0.${BUILD_ID}-RC"
+   //Release Version
+   //VERSION = "0.13.1.${BUILD_ID}"
+ }    
 
  stages{
 
@@ -11,36 +18,14 @@ pipeline {
      }
    }
 
-   stage('kubectl'){
-
+   stage('deploy to cluster'){
+     agent any
      steps {
-       sh 'kubectl apply -f .'
+       sh 'envsubst < ./helm/myk8ntools/Chart.yaml | helm upgrade -i --cleanup-on-fail myk8ntools -'
+       helm dependency update
+       helm upgrade mfbackend .
      }
-   }
-    
- 
-   //stage('kubectl'){
-   // agent {
-   //     docker {
-   //         image 'lachlanevenson/k8s-kubectl:v1.8.8' 
-    //        args '-p 3000:3000' 
-    //    }
-    //}
-   //  steps {
-  //     sh 'kubectl apply -f .'
-   //  }
-  // } 
-  // stage('helm'){
-  //  agent {
-  //      docker {
-  //          image 'lachlanevenson/k8s-helm:latest' 
-  //          args '-p 3000:3000' 
-  //      }
-  //  }
-  //   steps {
-  //     sh 'helm install monitoring stable/prometheus-operator --namespace default --set grafana.adminPassword=vulkan'
-  //   }
-  // }      
+   }  
  }
 }
 
