@@ -19,16 +19,6 @@ pipeline {
    }
 
    stage('deploy to cluster'){
-    agent {
-     kubernetes {
-      containerTemplate {
-        name 'helm'
-        image 'wardviaene/helm-s3'
-        ttyEnabled true
-        command 'cat'
-      }
-     }
-    }
      steps {
        sh 'helm dependency update ./helm/myk8ntools'
        sh 'envsubst < ./helm/myk8ntools/Chart.yaml | helm upgrade -i --cleanup-on-fail myk8ntools -'
