@@ -22,8 +22,8 @@ pipeline {
     agent {
      kubernetes {
       containerTemplate {
-        name 'maven'
-        image 'lachlanevenson/k8s-helm:latest'
+        name 'helm'
+        image 'wardviaene/helm-s3'
         ttyEnabled true
         command 'cat'
       }
