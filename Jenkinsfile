@@ -20,10 +20,15 @@ pipeline {
 
    stage('deploy to cluster'){
     agent {
-        docker {
-            image 'lachlanevenson/k8s-helm:latest' 
-        }
+     kubernetes {
+      containerTemplate {
+        name 'maven'
+        image 'lachlanevenson/k8s-helm:latest'
+        ttyEnabled true
+        command 'cat'
+      }
      }
+    }
      steps {
        sh 'helm dependency update ./helm/myk8ntools'
        sh 'envsubst < ./helm/myk8ntools/Chart.yaml | helm upgrade -i --cleanup-on-fail myk8ntools -'
