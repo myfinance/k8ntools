@@ -3,9 +3,9 @@ pipeline {
 
  environment{
    //Snapshot Version
-   VERSION = "0.13.0.${BUILD_ID}-RC"
+   VERSION = "0.13.0-alpha.${BUILD_ID}"
    //Release Version
-   //VERSION = "0.13.1.${BUILD_ID}"
+   //VERSION = "0.13.0"
  }    
 
  stages{
