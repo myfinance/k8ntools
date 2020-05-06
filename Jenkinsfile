@@ -27,7 +27,7 @@ pipeline {
        sh 'helm dependency update ./helm/myk8ntools'
        sh 'helm upgrade -i --cleanup-on-fail myk8ntools ./helm/myk8ntools'
        sh 'helm package helm/myk8ntools -u -d helmcharts/'
-       sh 'curl -u admin:vulkan ${TARGET_HELM_REPO} --upload-file helmcharts/myk8ntools-${VERSION}.tgz -v'
+       sh 'curl ${TARGET_HELM_REPO} --upload-file helmcharts/myk8ntools-${VERSION}.tgz -v'
      }
    }  
  }
