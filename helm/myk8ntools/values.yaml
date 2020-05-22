@@ -1,4 +1,5 @@
 replicaCount: 1
+stage: dev
 
 adminer:
   image: adminer
@@ -34,7 +35,7 @@ kibana:
 
 ingress:
   enabled: true
-  prefix: dev.
+  prefix: {{ .Values.stage }}.
   postfix: .mylocaldomain
   name: myk8ntools
   admin_host: dbadmin
