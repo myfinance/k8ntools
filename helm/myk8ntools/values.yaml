@@ -35,7 +35,7 @@ kibana:
 
 ingress:
   enabled: true
-  prefix: {{ .Values.stage }}.
+  prefix: {{ .stage }}.
   postfix: .mylocaldomain
   name: myk8ntools
   admin_host: dbadmin
