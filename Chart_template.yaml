@@ -20,6 +20,7 @@ version: ${VERSION}
 # incremented each time you make changes to the application.
 appVersion: ${VERSION}
 
+# https://github.com/helm/charts/tree/master/stable/prometheus-operator at least until 8.13.7 does not work with kubernetes 1.18
 dependencies:
 - name: prometheus-operator
   repository: https://kubernetes-charts.storage.googleapis.com/ 

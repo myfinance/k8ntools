@@ -34,8 +34,10 @@ kibana:
 
 ingress:
   enabled: true
+  prefix: dev.
+  postfix: .mylocaldomain
   name: myk8ntools
-  admin_host: admin.myfinance.mylocaldomain
-  elastic_host: elastic.myfinance.mylocaldomain
-  kibana_host: kibana.myfinance.mylocaldomain  
-  grafana_host: grafana.myfinance.mylocaldomain  
+  admin_host: dbadmin
+  elastic_host: elastic
+  kibana_host: kibana
+  grafana_host: grafana 
